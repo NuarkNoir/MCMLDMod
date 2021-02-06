@@ -1,26 +1,29 @@
 package xyz.nuark.mcmodlistdumper;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.gui.screen.ModListScreen;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xyz.nuark.mcmodlistdumper.gui.ButtonDumper;
 
-import static net.minecraftforge.fml.relauncher.Side.CLIENT;
-
-@Mod.EventBusSubscriber(CLIENT)
+@Mod.EventBusSubscriber()
 public class ModEventHandler {
 
     @SubscribeEvent
     public static void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent.Post event) {
-        final GuiScreen gui = event.getGui();
-        if (gui instanceof GuiMainMenu) {
-            GuiButton ref_btn = null;  // It will always be exit button
-            for (GuiButton btn : event.getButtonList()) {
-                if (btn.id == 4) {
-                    ref_btn = btn;
+        final Screen gui = event.getGui();
+        if (gui instanceof ModListScreen) {
+            Widget ref_btn = null;
+            for (Widget wgt : event.getWidgetList()) {
+                String refKey = ((TranslationTextComponent) wgt.getMessage()).getKey();
+                if (refKey.equals("gui.done")) {
+                    ref_btn = wgt;
+                    ref_btn.setWidth(80);
+                    break;
                 }
             }
 
@@ -29,7 +32,7 @@ public class ModEventHandler {
                 return;
             }
 
-            event.getButtonList().add(new ButtonDumper(gui, ref_btn));
+            event.addWidget(new ButtonDumper(ref_btn));
         }
     }
 }

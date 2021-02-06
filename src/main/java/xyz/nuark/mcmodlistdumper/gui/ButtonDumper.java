@@ -1,32 +1,42 @@
 package xyz.nuark.mcmodlistdumper.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 import xyz.nuark.mcmodlistdumper.utils.Dumper;
 
-public class ButtonDumper extends GuiButton {
-    public ButtonDumper(GuiScreen parent, GuiButton reference) {
-        super(4356789, reference.x + reference.width + 8, reference.y, "Dump mods");
-        this.width = 100;
+import java.io.File;
+import java.nio.file.Path;
+
+public class ButtonDumper extends ExtendedButton {
+    public ButtonDumper(Widget reference) {
+        super(
+                reference.x + reference.getWidth() + 8, reference.y,
+                80, 20,
+                new StringTextComponent("Dump list"),
+                ButtonDumper::dump
+        );
     }
 
-    @Override
-    public void mouseReleased(int mouseX, int mouseY) {
-        String title = "Mods dump saved";
-        String message = "Location: ";
+    public static void dump(Button _ignored) {
+        boolean ok = true;
+        String message = "";
 
         try {
-            String location = Dumper.dump();
-            message += location;
+            Path location = Dumper.dump();
+            Util.getOSType().openFile(location.toFile());
         }
         catch (Exception e) {
+            ok = false;
             e.fillInStackTrace();
-            title = "Cannot save mods dump";
             message = e.getMessage();
         }
 
-        Minecraft.getMinecraft().displayGuiScreen(new GuiOk(title, message));
-        super.mouseReleased(mouseX, mouseY);
+        Screen currScreen = Minecraft.getInstance().currentScreen;
+        Minecraft.getInstance().displayGuiScreen(new DumpResultScreen(currScreen, ok, message));
     }
 }
