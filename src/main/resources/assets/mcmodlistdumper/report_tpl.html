@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="EN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{0} report</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script type='text/javascript' src='https://ko-fi.com/widgets/widget_2.js'></script>
+    <script>
+        $(document).ready(function() '{'
+            $("#report_table").DataTable();
+        '}');
+    </script>
+    <style>
+        * '{'
+            padding: 0;
+            margin: 0;
+        '}'
+        .main '{'
+            padding: 20px;
+        '}'
+    </style>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+</head>
+<body>
+<div class="main">
+    <h4>Report generated with {0} v{1} by {2}</h4>
+    <p>Thanks for choosing me!</p>
+    <br>
+    <script type='text/javascript'>kofiwidget2.init("Support my creator on Ko-fi", "#29abe0", "I2I222JQH");kofiwidget2.draw();</script>
+    <br>
+    <br>
+
+    <table id="report_table" class="display compact">
+        <thead>
+        <tr>
+            <th>ModID</th>
+            <th>Mod name</th>
+            <th>Description</th>
+            <th>Display ver.</th>
+            <th>Authors</th>
+        </tr>
+        </thead>
+        <tbody>
+        {3}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>ModID</th>
+            <th>Mod name</th>
+            <th>Description</th>
+            <th>Display ver.</th>
+            <th>Authors</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+</body>
+</html>
