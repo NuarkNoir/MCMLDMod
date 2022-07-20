@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.nuark.mcmodlistdumper.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mcmodlistdumper.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "MixinModListScreen"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
