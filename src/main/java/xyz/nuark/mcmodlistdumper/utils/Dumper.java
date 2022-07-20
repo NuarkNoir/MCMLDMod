@@ -20,8 +20,9 @@ import java.util.Objects;
 
 public class Dumper {
     private static String readTemplateFromAssets() throws IOException {
-        InputStream stream = MCMLDMod.class.getClassLoader().getResourceAsStream("assets/mcmodlistdumper/report_tpl.html");
-        return IOUtils.toString(Objects.requireNonNull(stream), StandardCharsets.UTF_8);
+        try (InputStream stream = MCMLDMod.class.getClassLoader().getResourceAsStream("assets/mcmodlistdumper/report_tpl.html")) {
+            return IOUtils.toString(Objects.requireNonNull(stream), StandardCharsets.UTF_8);
+        }
     }
 
     public static Path dump() throws Exception {
@@ -41,7 +42,7 @@ public class Dumper {
         });
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Path folderPath = Paths.get(Minecraft.getInstance().gameDir.getAbsolutePath(), "mod_lists");
+        Path folderPath = Paths.get(Minecraft.getInstance().gameDirectory.getAbsolutePath(), "mod_lists");
         if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) {
             Files.createDirectories(folderPath);
         }

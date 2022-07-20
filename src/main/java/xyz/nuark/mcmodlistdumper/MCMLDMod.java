@@ -1,23 +1,14 @@
 package xyz.nuark.mcmodlistdumper;
 
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
+import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
 
-@Mod("mcmodlistdumper")
+@Mod(MCMLDMod.MODID)
 public class MCMLDMod {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final String MODID = "mcmodlistdumper";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public MCMLDMod() {
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(
-                () -> "", (rvs, nb) -> nb
-        ));
-    }
-
-    public static Logger getLogger() {
-        return LOGGER;
     }
 }
